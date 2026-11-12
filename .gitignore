@@ -1,0 +1,17 @@
+# third-party dataset (download with the command in README)
+data/
+# python cache
+__pycache__/
+*.pyc
+# large prediction dumps / model artefacts
+*.pt
+*.pth
+*.safetensors
+# synthetic smoke tests and incomplete runs
+results/smoke/
+results/smoke2/
+results/ablation_smoke/
+results/ablation_smoke.log
+results/full/
+results/ablation/extractor_variants/
+results/*.log

@@ -1,0 +1,15 @@
+torch>=2.5
+torchvision
+transformers>=4.40     # SAM (facebook/sam-vit-*), SegFormer
+timm>=1.0              # ConvNeXt, Swin, DINOv2, ResNet, EfficientNet
+opencv-python
+scikit-image
+scikit-learn
+xgboost>=2.0
+numpy
+pandas
+matplotlib
+tabulate
+
+# Plain-language explanation: this is the shopping list of Python libraries the project needs.
+# Install everything at once with:  pip install -r requirements.txt
