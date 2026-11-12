@@ -47,7 +47,7 @@
 | SAM ViT-B zero-shot (e2e) | 0.7270 | 0.6553 | 0.4873 | 0.6552 | 0.5274 | 0.3581 |
 
 **Key findings**
-1. **On the primary test set**, Improvement 3 beats the paper's features: F1 0.923 → 0.975 and IoU 0.856 → 0.951. It also beats every single backbone, showing that fusing CNN, Transformer and the paper's local branches through attention helps more than any one source alone.
+1. **On the primary test set**, Improvement 3 beats the paper's features: F1 0.923 → 0.975 and IoU 0.856 → 0.951. It also beats every *frozen* single backbone. However, the ablation (README, Ablation B) shows that a ViT-only variant with the same trained adapters does as well (F1 0.977 vs 0.975). The gain comes mainly from the pretrained DINOv2 features plus trained adapters, not from fusing CNN and Transformer.
 2. **The biggest gain is generalisation.** On the unseen external scanner, the paper's method collapses (F1 0.556), and so does U-Net, trained from scratch (F1 0.523). The hybrid holds F1 0.896 and IoU 0.811, the best by a wide margin. The paper claimed its method generalises; on a real domain shift it does not, while the pretrained-backbone hybrid does.
 3. **The paper's ordering holds:** handcrafted M1 < M5, and each added filter helps a little. Our measured paper CNN lands slightly *below* M5, unlike the paper's Table 3. That's expected, since its weights are random and never trained, as the paper describes.
 4. **SAM zero-shot whole-cell masks are weak** (F1 0.66). SAM's nucleus masks were always fully inside the cell, but the faint cytoplasm is either missed or leaks into touching red cells. So SAM is used here for **localisation**, where it clearly wins (Section 1), not as the final segmenter. Fine-tuned medical SAM variants (MedSAM) are the natural next step.
