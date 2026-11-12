@@ -1,0 +1,140 @@
+
+==== run 2026-11-12 23:08:01 ====
+{
+ "images": "data/zheng_wbc/Dataset 1",
+ "masks": "data/zheng_wbc/Dataset 1",
+ "ext_images": null,
+ "ext_masks": null,
+ "image_ext": ".bmp",
+ "ext_image_ext": null,
+ "synthetic": 0,
+ "pseudo_gt": false,
+ "limit": null,
+ "per_class": null,
+ "max_side": 400,
+ "roi_size": 128,
+ "localizer": "sam",
+ "sam_model": "facebook/sam-vit-base",
+ "stain": "macenko",
+ "no_clahe": false,
+ "extractors": "paper,hybrid,hybrid_noattn,hybrid_cnnonly,hybrid_vitonly,hybrid_nolocal,hybrid_swin",
+ "classifiers": "fcl,svm,rf,xgb",
+ "e2e": "",
+ "pca": 128,
+ "train_px": 512,
+ "test_px": 2048,
+ "epochs": 30,
+ "n_vis": 8,
+ "seed": 0,
+ "out": "results/ablation\\extractor_variants"
+}
+data: train 240  test 60  external 0
+preprocessing: macenko+clahe
+phase I localiser: sam
+  [train] 240 ROIs | WBC coverage 0.9064 | centroid-in-WBC 0.992 | 1037.2 ms/img
+  [test] 60 ROIs | WBC coverage 0.9565 | centroid-in-WBC 0.983 | 1035.1 ms/img
+train pixels 122880 (WBC 40.9%) | eval pixels primary 122880
+
+[extractor] Paper CNN fusion (2022)
+  features: raw 128-D -> 128-D | extraction+training 0.3s
+    Paper CNN fusion (2022)                  FCL      primary   acc 0.9385  F1 0.9224  IoU 0.8559  AUC 0.9841
+    Paper CNN fusion (2022)                  SVM      primary   acc 0.9391  F1 0.9225  IoU 0.8561  AUC 0.9827
+    Paper CNN fusion (2022)                  RF       primary   acc 0.9363  F1 0.9194  IoU 0.8508  AUC 0.9844
+    Paper CNN fusion (2022)                  XGBoost  primary   acc 0.9378  F1 0.9211  IoU 0.8538  AUC 0.9853
+
+[extractor] Hybrid ConvNeXt+DINOv2+CBAM (ours)
+    epoch 1/30  loss 1.1617
+    epoch 5/30  loss 0.2484
+    epoch 10/30  loss 0.0985
+    epoch 15/30  loss 0.0761
+    epoch 20/30  loss 0.0668
+    epoch 25/30  loss 0.0617
+    epoch 30/30  loss 0.0614
+  features: raw 128-D -> 128-D | extraction+training 207.8s
+    Hybrid ConvNeXt+DINOv2+CBAM (ours)       FCL      primary   acc 0.9798  F1 0.9738  IoU 0.9488  AUC 0.9985
+    Hybrid ConvNeXt+DINOv2+CBAM (ours)       SVM      primary   acc 0.9806  F1 0.9748  IoU 0.9508  AUC 0.9981
+    Hybrid ConvNeXt+DINOv2+CBAM (ours)       RF       primary   acc 0.9801  F1 0.9742  IoU 0.9496  AUC 0.9981
+    Hybrid ConvNeXt+DINOv2+CBAM (ours)       XGBoost  primary   acc 0.9803  F1 0.9743  IoU 0.9500  AUC 0.9985
+
+[extractor] Hybrid w/o attention
+    epoch 1/30  loss 1.0821
+    epoch 5/30  loss 0.2524
+    epoch 10/30  loss 0.1023
+    epoch 15/30  loss 0.0810
+    epoch 20/30  loss 0.0656
+    epoch 25/30  loss 0.0606
+    epoch 30/30  loss 0.0603
+  features: raw 128-D -> 128-D | extraction+training 812.5s
+    Hybrid w/o attention                     FCL      primary   acc 0.9784  F1 0.9720  IoU 0.9455  AUC 0.9982
+    Hybrid w/o attention                     SVM      primary   acc 0.9789  F1 0.9727  IoU 0.9468  AUC 0.9973
+    Hybrid w/o attention                     RF       primary   acc 0.9788  F1 0.9725  IoU 0.9464  AUC 0.9975
+    Hybrid w/o attention                     XGBoost  primary   acc 0.9784  F1 0.9720  IoU 0.9456  AUC 0.9981
+
+[extractor] Hybrid CNN-only
+    epoch 1/30  loss 1.1190
+    epoch 5/30  loss 0.2864
+    epoch 10/30  loss 0.1156
+    epoch 15/30  loss 0.0845
+    epoch 20/30  loss 0.0738
+    epoch 25/30  loss 0.0666
+    epoch 30/30  loss 0.0668
+  features: raw 128-D -> 128-D | extraction+training 329.5s
+    Hybrid CNN-only                          FCL      primary   acc 0.9787  F1 0.9725  IoU 0.9464  AUC 0.9978
+    Hybrid CNN-only                          SVM      primary   acc 0.9791  F1 0.9729  IoU 0.9473  AUC 0.9964
+    Hybrid CNN-only                          RF       primary   acc 0.9792  F1 0.9730  IoU 0.9474  AUC 0.9965
+    Hybrid CNN-only                          XGBoost  primary   acc 0.9789  F1 0.9726  IoU 0.9467  AUC 0.9976
+
+[extractor] Hybrid ViT-only
+    epoch 1/30  loss 1.0062
+    epoch 5/30  loss 0.2166
+    epoch 10/30  loss 0.1075
+    epoch 15/30  loss 0.0806
+    epoch 20/30  loss 0.0746
+    epoch 25/30  loss 0.0650
+    epoch 30/30  loss 0.0650
+  features: raw 128-D -> 128-D | extraction+training 109.4s
+    Hybrid ViT-only                          FCL      primary   acc 0.9819  F1 0.9765  IoU 0.9540  AUC 0.9988
+    Hybrid ViT-only                          SVM      primary   acc 0.9820  F1 0.9766  IoU 0.9543  AUC 0.9984
+    Hybrid ViT-only                          RF       primary   acc 0.9817  F1 0.9763  IoU 0.9536  AUC 0.9985
+    Hybrid ViT-only                          XGBoost  primary   acc 0.9823  F1 0.9770  IoU 0.9551  AUC 0.9988
+
+[extractor] Hybrid w/o paper branches
+    epoch 1/30  loss 1.2545
+    epoch 5/30  loss 0.2740
+    epoch 10/30  loss 0.0945
+    epoch 15/30  loss 0.0695
+    epoch 20/30  loss 0.0630
+    epoch 25/30  loss 0.0563
+    epoch 30/30  loss 0.0564
+  features: raw 128-D -> 128-D | extraction+training 171.8s
+    Hybrid w/o paper branches                FCL      primary   acc 0.9799  F1 0.9739  IoU 0.9492  AUC 0.9984
+    Hybrid w/o paper branches                SVM      primary   acc 0.9804  F1 0.9746  IoU 0.9504  AUC 0.9969
+    Hybrid w/o paper branches                RF       primary   acc 0.9800  F1 0.9741  IoU 0.9495  AUC 0.9977
+    Hybrid w/o paper branches                XGBoost  primary   acc 0.9803  F1 0.9744  IoU 0.9501  AUC 0.9984
+
+[extractor] Hybrid ConvNeXt+Swin+CBAM (ours)
+    epoch 1/30  loss 1.2654
+    epoch 5/30  loss 0.7996
+    epoch 10/30  loss 0.0889
+    epoch 15/30  loss 0.0690
+    epoch 20/30  loss 0.0611
+    epoch 25/30  loss 0.0599
+    epoch 30/30  loss 0.0560
+  features: raw 128-D -> 128-D | extraction+training 217.9s
+    Hybrid ConvNeXt+Swin+CBAM (ours)         FCL      primary   acc 0.9800  F1 0.9741  IoU 0.9496  AUC 0.9983
+    Hybrid ConvNeXt+Swin+CBAM (ours)         SVM      primary   acc 0.9803  F1 0.9745  IoU 0.9503  AUC 0.9962
+    Hybrid ConvNeXt+Swin+CBAM (ours)         RF       primary   acc 0.9801  F1 0.9742  IoU 0.9496  AUC 0.9974
+    Hybrid ConvNeXt+Swin+CBAM (ours)         XGBoost  primary   acc 0.9802  F1 0.9743  IoU 0.9498  AUC 0.9983
+
+Primary-set overall accuracy:
+classifier                             FCL      RF     SVM  XGBoost
+display                                                            
+Hybrid CNN-only                     0.9787  0.9792  0.9791   0.9789
+Hybrid ConvNeXt+DINOv2+CBAM (ours)  0.9798  0.9801  0.9806   0.9803
+Hybrid ConvNeXt+Swin+CBAM (ours)    0.9800  0.9801  0.9803   0.9802
+Hybrid ViT-only                     0.9819  0.9817  0.9820   0.9823
+Hybrid w/o attention                0.9784  0.9788  0.9789   0.9784
+Hybrid w/o paper branches           0.9799  0.9800  0.9804   0.9803
+Paper CNN fusion (2022)             0.9385  0.9363  0.9391   0.9378
+
+saved to results/ablation\extractor_variants

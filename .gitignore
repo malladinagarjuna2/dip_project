@@ -13,5 +13,4 @@ results/smoke2/
 results/ablation_smoke/
 results/ablation_smoke.log
 results/full/
-results/ablation/extractor_variants/
 results/*.log
