@@ -1,0 +1,8 @@
+Dataset 1 none     otsu  coverage 0.650  full-cell(>=99%) 0.26  centroid-in-WBC 0.983  roi/img 0.49
+Dataset 1 none     sam   coverage 0.922  full-cell(>=99%) 0.85  centroid-in-WBC 0.800  roi/img 0.89
+Dataset 1 macenko  otsu  coverage 0.791  full-cell(>=99%) 0.45  centroid-in-WBC 0.997  roi/img 0.66
+Dataset 1 macenko  sam   coverage 0.939  full-cell(>=99%) 0.85  centroid-in-WBC 0.990  roi/img 0.90
+Dataset 2 none     otsu  coverage 0.839  full-cell(>=99%) 0.37  centroid-in-WBC 1.000  roi/img 0.55
+Dataset 2 none     sam   coverage 0.983  full-cell(>=99%) 0.92  centroid-in-WBC 0.990  roi/img 0.88
+Dataset 2 macenko  otsu  coverage 0.847  full-cell(>=99%) 0.54  centroid-in-WBC 0.900  roi/img 0.61
+Dataset 2 macenko  sam   coverage 0.958  full-cell(>=99%) 0.89  centroid-in-WBC 0.890  roi/img 0.88

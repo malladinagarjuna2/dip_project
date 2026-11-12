@@ -1,0 +1,61 @@
+
+==== run 2026-11-12 22:58:55 ====
+{
+ "images": "data/zheng_wbc/Dataset 1",
+ "masks": "data/zheng_wbc/Dataset 1",
+ "ext_images": null,
+ "ext_masks": null,
+ "image_ext": ".bmp",
+ "ext_image_ext": null,
+ "synthetic": 0,
+ "pseudo_gt": false,
+ "limit": null,
+ "per_class": null,
+ "max_side": 400,
+ "roi_size": 128,
+ "localizer": "sam",
+ "sam_model": "facebook/sam-vit-base",
+ "stain": "macenko",
+ "no_clahe": false,
+ "extractors": "paper,hybrid",
+ "classifiers": "svm,xgb",
+ "e2e": "",
+ "pca": 128,
+ "train_px": 512,
+ "test_px": 2048,
+ "epochs": 30,
+ "n_vis": 8,
+ "seed": 0,
+ "out": "results/ablation\\sam_macenko_clahe"
+}
+data: train 240  test 60  external 0
+preprocessing: macenko+clahe
+phase I localiser: sam
+  [train] 240 ROIs | WBC coverage 0.9064 | centroid-in-WBC 0.992 | 1008.0 ms/img
+  [test] 60 ROIs | WBC coverage 0.9565 | centroid-in-WBC 0.983 | 1022.9 ms/img
+train pixels 122880 (WBC 40.9%) | eval pixels primary 122880
+
+[extractor] Paper CNN fusion (2022)
+  features: raw 128-D -> 128-D | extraction+training 0.3s
+    Paper CNN fusion (2022)                  SVM      primary   acc 0.9391  F1 0.9225  IoU 0.8561  AUC 0.9827
+    Paper CNN fusion (2022)                  XGBoost  primary   acc 0.9378  F1 0.9211  IoU 0.8538  AUC 0.9853
+
+[extractor] Hybrid ConvNeXt+DINOv2+CBAM (ours)
+    epoch 1/30  loss 1.2330
+    epoch 5/30  loss 0.2307
+    epoch 10/30  loss 0.0910
+    epoch 15/30  loss 0.0722
+    epoch 20/30  loss 0.0621
+    epoch 25/30  loss 0.0614
+    epoch 30/30  loss 0.0561
+  features: raw 128-D -> 128-D | extraction+training 211.0s
+    Hybrid ConvNeXt+DINOv2+CBAM (ours)       SVM      primary   acc 0.9798  F1 0.9738  IoU 0.9489  AUC 0.9972
+    Hybrid ConvNeXt+DINOv2+CBAM (ours)       XGBoost  primary   acc 0.9793  F1 0.9732  IoU 0.9478  AUC 0.9983
+
+Primary-set overall accuracy:
+classifier                             SVM  XGBoost
+display                                            
+Hybrid ConvNeXt+DINOv2+CBAM (ours)  0.9798   0.9793
+Paper CNN fusion (2022)             0.9391   0.9378
+
+saved to results/ablation\sam_macenko_clahe

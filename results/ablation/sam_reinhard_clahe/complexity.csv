@@ -1,0 +1,3 @@
+method,display,raw_dim,feat_dim,train_s,params_M,trainable_params_M,gflops_per_roi,latency_ms_per_roi
+paper,Paper CNN fusion (2022),128,128,0.0,0.005348,0.0,0.166658048,0.887522499942861
+hybrid,Hybrid ConvNeXt+DINOv2+CBAM (ours),128,128,193.01661220000096,49.93976,0.492368,33.351118336,26.9649699999718

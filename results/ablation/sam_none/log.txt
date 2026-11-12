@@ -1,0 +1,61 @@
+
+==== run 2026-11-12 22:40:55 ====
+{
+ "images": "data/zheng_wbc/Dataset 1",
+ "masks": "data/zheng_wbc/Dataset 1",
+ "ext_images": null,
+ "ext_masks": null,
+ "image_ext": ".bmp",
+ "ext_image_ext": null,
+ "synthetic": 0,
+ "pseudo_gt": false,
+ "limit": null,
+ "per_class": null,
+ "max_side": 400,
+ "roi_size": 128,
+ "localizer": "sam",
+ "sam_model": "facebook/sam-vit-base",
+ "stain": "none",
+ "no_clahe": true,
+ "extractors": "paper,hybrid",
+ "classifiers": "svm,xgb",
+ "e2e": "",
+ "pca": 128,
+ "train_px": 512,
+ "test_px": 2048,
+ "epochs": 30,
+ "n_vis": 8,
+ "seed": 0,
+ "out": "results/ablation\\sam_none"
+}
+data: train 240  test 60  external 0
+preprocessing: none
+phase I localiser: sam
+  [train] 240 ROIs | WBC coverage 0.9217 | centroid-in-WBC 0.812 | 985.3 ms/img
+  [test] 60 ROIs | WBC coverage 0.9230 | centroid-in-WBC 0.750 | 997.0 ms/img
+train pixels 122880 (WBC 38.1%) | eval pixels primary 122880
+
+[extractor] Paper CNN fusion (2022)
+  features: raw 128-D -> 128-D | extraction+training 0.3s
+    Paper CNN fusion (2022)                  SVM      primary   acc 0.9586  F1 0.9442  IoU 0.8943  AUC 0.9897
+    Paper CNN fusion (2022)                  XGBoost  primary   acc 0.9590  F1 0.9450  IoU 0.8957  AUC 0.9908
+
+[extractor] Hybrid ConvNeXt+DINOv2+CBAM (ours)
+    epoch 1/30  loss 1.2411
+    epoch 5/30  loss 0.2462
+    epoch 10/30  loss 0.1024
+    epoch 15/30  loss 0.0687
+    epoch 20/30  loss 0.0582
+    epoch 25/30  loss 0.0549
+    epoch 30/30  loss 0.0531
+  features: raw 128-D -> 128-D | extraction+training 207.2s
+    Hybrid ConvNeXt+DINOv2+CBAM (ours)       SVM      primary   acc 0.9803  F1 0.9735  IoU 0.9483  AUC 0.9974
+    Hybrid ConvNeXt+DINOv2+CBAM (ours)       XGBoost  primary   acc 0.9802  F1 0.9733  IoU 0.9479  AUC 0.9984
+
+Primary-set overall accuracy:
+classifier                             SVM  XGBoost
+display                                            
+Hybrid ConvNeXt+DINOv2+CBAM (ours)  0.9803   0.9802
+Paper CNN fusion (2022)             0.9586   0.9590
+
+saved to results/ablation\sam_none

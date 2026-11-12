@@ -1,0 +1,61 @@
+
+==== run 2026-11-12 22:37:09 ====
+{
+ "images": "data/zheng_wbc/Dataset 1",
+ "masks": "data/zheng_wbc/Dataset 1",
+ "ext_images": null,
+ "ext_masks": null,
+ "image_ext": ".bmp",
+ "ext_image_ext": null,
+ "synthetic": 0,
+ "pseudo_gt": false,
+ "limit": null,
+ "per_class": null,
+ "max_side": 400,
+ "roi_size": 128,
+ "localizer": "otsu",
+ "sam_model": "facebook/sam-vit-base",
+ "stain": "macenko",
+ "no_clahe": false,
+ "extractors": "paper,hybrid",
+ "classifiers": "svm,xgb",
+ "e2e": "",
+ "pca": 128,
+ "train_px": 512,
+ "test_px": 2048,
+ "epochs": 30,
+ "n_vis": 8,
+ "seed": 0,
+ "out": "results/ablation\\otsu_macenko_clahe"
+}
+data: train 240  test 60  external 0
+preprocessing: macenko+clahe
+phase I localiser: otsu
+  [train] 240 ROIs | WBC coverage 0.9102 | centroid-in-WBC 1.000 | 0.8 ms/img
+  [test] 60 ROIs | WBC coverage 0.9176 | centroid-in-WBC 1.000 | 0.8 ms/img
+train pixels 122880 (WBC 52.6%) | eval pixels primary 122880
+
+[extractor] Paper CNN fusion (2022)
+  features: raw 128-D -> 128-D | extraction+training 0.4s
+    Paper CNN fusion (2022)                  SVM      primary   acc 0.9366  F1 0.9385  IoU 0.8841  AUC 0.9821
+    Paper CNN fusion (2022)                  XGBoost  primary   acc 0.9365  F1 0.9385  IoU 0.8841  AUC 0.9843
+
+[extractor] Hybrid ConvNeXt+DINOv2+CBAM (ours)
+    epoch 1/30  loss 1.1819
+    epoch 5/30  loss 0.1938
+    epoch 10/30  loss 0.0928
+    epoch 15/30  loss 0.0751
+    epoch 20/30  loss 0.0662
+    epoch 25/30  loss 0.0640
+    epoch 30/30  loss 0.0588
+  features: raw 128-D -> 128-D | extraction+training 203.1s
+    Hybrid ConvNeXt+DINOv2+CBAM (ours)       SVM      primary   acc 0.9793  F1 0.9797  IoU 0.9601  AUC 0.9979
+    Hybrid ConvNeXt+DINOv2+CBAM (ours)       XGBoost  primary   acc 0.9788  F1 0.9792  IoU 0.9592  AUC 0.9983
+
+Primary-set overall accuracy:
+classifier                             SVM  XGBoost
+display                                            
+Hybrid ConvNeXt+DINOv2+CBAM (ours)  0.9793   0.9788
+Paper CNN fusion (2022)             0.9366   0.9365
+
+saved to results/ablation\otsu_macenko_clahe

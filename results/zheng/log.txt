@@ -1,0 +1,216 @@
+
+==== run 2026-11-12 14:35:04 ====
+{
+ "images": "data/zheng_wbc/Dataset 1",
+ "masks": "data/zheng_wbc/Dataset 1",
+ "ext_images": "data/zheng_wbc/Dataset 2",
+ "ext_masks": "data/zheng_wbc/Dataset 2",
+ "image_ext": ".bmp",
+ "ext_image_ext": ".bmp",
+ "synthetic": 0,
+ "pseudo_gt": false,
+ "limit": null,
+ "per_class": null,
+ "max_side": 400,
+ "roi_size": 128,
+ "localizer": "sam",
+ "sam_model": "facebook/sam-vit-base",
+ "stain": "macenko",
+ "no_clahe": false,
+ "extractors": "paper,M1,M2,M3,M4,M5,resnet50,convnext_t,swin_t,dinov2_s,hybrid",
+ "classifiers": "fcl,svm,rf,xgb",
+ "e2e": "unet,segformer_b0,sam,hybrid_e2e",
+ "pca": 128,
+ "train_px": 512,
+ "test_px": 2048,
+ "epochs": 30,
+ "n_vis": 8,
+ "seed": 0,
+ "out": "results/zheng"
+}
+data: train 240  test 60  external 100
+preprocessing: macenko+clahe
+phase I localiser: sam
+  [train] 240 ROIs | WBC coverage 0.9064 | centroid-in-WBC 0.992 | 1518.9 ms/img
+  [test] 60 ROIs | WBC coverage 0.9565 | centroid-in-WBC 0.983 | 969.8 ms/img
+  [external] 100 ROIs | WBC coverage 0.9624 | centroid-in-WBC 0.910 | 999.3 ms/img
+train pixels 122880 (WBC 40.9%) | eval pixels primary 122880, external 204800
+
+[extractor] Paper CNN fusion (2022)
+  features: raw 128-D -> 128-D | extraction+training 0.6s
+    Paper CNN fusion (2022)                  FCL      primary   acc 0.9385  F1 0.9224  IoU 0.8559  AUC 0.9841
+    Paper CNN fusion (2022)                  FCL      external  acc 0.4649  F1 0.5450  IoU 0.3746  AUC 0.8191
+    Paper CNN fusion (2022)                  SVM      primary   acc 0.9391  F1 0.9225  IoU 0.8561  AUC 0.9827
+    Paper CNN fusion (2022)                  SVM      external  acc 0.4920  F1 0.5556  IoU 0.3847  AUC 0.7415
+    Paper CNN fusion (2022)                  RF       primary   acc 0.9363  F1 0.9194  IoU 0.8508  AUC 0.9844
+    Paper CNN fusion (2022)                  RF       external  acc 0.4484  F1 0.5374  IoU 0.3675  AUC 0.6562
+    Paper CNN fusion (2022)                  XGBoost  primary   acc 0.9378  F1 0.9211  IoU 0.8538  AUC 0.9853
+    Paper CNN fusion (2022)                  XGBoost  external  acc 0.4549  F1 0.5385  IoU 0.3685  AUC 0.6496
+
+[extractor] M1 Gabor
+  features: raw 68-D -> 68-D | extraction+training 6.5s
+    M1 Gabor                                 FCL      primary   acc 0.9400  F1 0.9237  IoU 0.8583  AUC 0.9850
+    M1 Gabor                                 FCL      external  acc 0.4070  F1 0.5207  IoU 0.3520  AUC 0.8167
+    M1 Gabor                                 SVM      primary   acc 0.9312  F1 0.9119  IoU 0.8380  AUC 0.9797
+    M1 Gabor                                 SVM      external  acc 0.4036  F1 0.5208  IoU 0.3521  AUC 0.5151
+    M1 Gabor                                 RF       primary   acc 0.9405  F1 0.9243  IoU 0.8593  AUC 0.9861
+    M1 Gabor                                 RF       external  acc 0.3816  F1 0.5118  IoU 0.3439  AUC 0.5247
+    M1 Gabor                                 XGBoost  primary   acc 0.9424  F1 0.9267  IoU 0.8634  AUC 0.9870
+    M1 Gabor                                 XGBoost  external  acc 0.4225  F1 0.5277  IoU 0.3585  AUC 0.6358
+
+[extractor] M2 +LBP
+  features: raw 69-D -> 69-D | extraction+training 3.0s
+    M2 +LBP                                  FCL      primary   acc 0.9392  F1 0.9219  IoU 0.8550  AUC 0.9854
+    M2 +LBP                                  FCL      external  acc 0.4485  F1 0.5383  IoU 0.3683  AUC 0.8265
+    M2 +LBP                                  SVM      primary   acc 0.9303  F1 0.9108  IoU 0.8362  AUC 0.9794
+    M2 +LBP                                  SVM      external  acc 0.4103  F1 0.5236  IoU 0.3546  AUC 0.4964
+    M2 +LBP                                  RF       primary   acc 0.9410  F1 0.9250  IoU 0.8605  AUC 0.9862
+    M2 +LBP                                  RF       external  acc 0.3808  F1 0.5115  IoU 0.3436  AUC 0.5158
+    M2 +LBP                                  XGBoost  primary   acc 0.9434  F1 0.9279  IoU 0.8654  AUC 0.9872
+    M2 +LBP                                  XGBoost  external  acc 0.4225  F1 0.5278  IoU 0.3585  AUC 0.6294
+
+[extractor] M3 +Edges
+  features: raw 74-D -> 74-D | extraction+training 3.7s
+    M3 +Edges                                FCL      primary   acc 0.9341  F1 0.9171  IoU 0.8469  AUC 0.9856
+    M3 +Edges                                FCL      external  acc 0.4037  F1 0.5182  IoU 0.3497  AUC 0.8007
+    M3 +Edges                                SVM      primary   acc 0.9305  F1 0.9109  IoU 0.8364  AUC 0.9798
+    M3 +Edges                                SVM      external  acc 0.4292  F1 0.5316  IoU 0.3621  AUC 0.5103
+    M3 +Edges                                RF       primary   acc 0.9409  F1 0.9249  IoU 0.8603  AUC 0.9864
+    M3 +Edges                                RF       external  acc 0.3895  F1 0.5150  IoU 0.3468  AUC 0.5274
+    M3 +Edges                                XGBoost  primary   acc 0.9439  F1 0.9285  IoU 0.8665  AUC 0.9877
+    M3 +Edges                                XGBoost  external  acc 0.4387  F1 0.5350  IoU 0.3652  AUC 0.6290
+
+[extractor] M4 +K-means
+  features: raw 75-D -> 75-D | extraction+training 5.5s
+    M4 +K-means                              FCL      primary   acc 0.9437  F1 0.9277  IoU 0.8652  AUC 0.9871
+    M4 +K-means                              FCL      external  acc 0.5860  F1 0.6032  IoU 0.4318  AUC 0.7703
+    M4 +K-means                              SVM      primary   acc 0.9371  F1 0.9189  IoU 0.8499  AUC 0.9818
+    M4 +K-means                              SVM      external  acc 0.5073  F1 0.5640  IoU 0.3928  AUC 0.5734
+    M4 +K-means                              RF       primary   acc 0.9433  F1 0.9278  IoU 0.8653  AUC 0.9870
+    M4 +K-means                              RF       external  acc 0.4482  F1 0.5396  IoU 0.3695  AUC 0.5858
+    M4 +K-means                              XGBoost  primary   acc 0.9470  F1 0.9323  IoU 0.8732  AUC 0.9882
+    M4 +K-means                              XGBoost  external  acc 0.5432  F1 0.5829  IoU 0.4113  AUC 0.6576
+
+[extractor] M5 +Gaussian
+  features: raw 78-D -> 78-D | extraction+training 11.5s
+    M5 +Gaussian                             FCL      primary   acc 0.9481  F1 0.9333  IoU 0.8749  AUC 0.9886
+    M5 +Gaussian                             FCL      external  acc 0.5190  F1 0.5717  IoU 0.4003  AUC 0.7664
+    M5 +Gaussian                             SVM      primary   acc 0.9391  F1 0.9214  IoU 0.8543  AUC 0.9833
+    M5 +Gaussian                             SVM      external  acc 0.4781  F1 0.5517  IoU 0.3810  AUC 0.5613
+    M5 +Gaussian                             RF       primary   acc 0.9467  F1 0.9322  IoU 0.8730  AUC 0.9881
+    M5 +Gaussian                             RF       external  acc 0.4404  F1 0.5364  IoU 0.3665  AUC 0.5795
+    M5 +Gaussian                             XGBoost  primary   acc 0.9526  F1 0.9395  IoU 0.8859  AUC 0.9898
+    M5 +Gaussian                             XGBoost  external  acc 0.5162  F1 0.5704  IoU 0.3990  AUC 0.6560
+
+[extractor] ResNet-50
+  features: raw 3904-D -> 128-D | extraction+training 37.1s
+    ResNet-50                                FCL      primary   acc 0.9750  F1 0.9676  IoU 0.9371  AUC 0.9971
+    ResNet-50                                FCL      external  acc 0.8240  F1 0.7654  IoU 0.6200  AUC 0.9250
+    ResNet-50                                SVM      primary   acc 0.9710  F1 0.9625  IoU 0.9277  AUC 0.9965
+    ResNet-50                                SVM      external  acc 0.7904  F1 0.7254  IoU 0.5691  AUC 0.8976
+    ResNet-50                                RF       primary   acc 0.9686  F1 0.9594  IoU 0.9220  AUC 0.9960
+    ResNet-50                                RF       external  acc 0.6157  F1 0.6203  IoU 0.4495  AUC 0.9019
+    ResNet-50                                XGBoost  primary   acc 0.9749  F1 0.9675  IoU 0.9371  AUC 0.9974
+    ResNet-50                                XGBoost  external  acc 0.6828  F1 0.6546  IoU 0.4865  AUC 0.8731
+
+[extractor] ConvNeXt-T
+  features: raw 1440-D -> 128-D | extraction+training 9.2s
+    ConvNeXt-T                               FCL      primary   acc 0.9654  F1 0.9548  IoU 0.9135  AUC 0.9953
+    ConvNeXt-T                               FCL      external  acc 0.8982  F1 0.8409  IoU 0.7255  AUC 0.9596
+    ConvNeXt-T                               SVM      primary   acc 0.9630  F1 0.9518  IoU 0.9081  AUC 0.9934
+    ConvNeXt-T                               SVM      external  acc 0.8636  F1 0.8015  IoU 0.6688  AUC 0.9333
+    ConvNeXt-T                               RF       primary   acc 0.9487  F1 0.9319  IoU 0.8725  AUC 0.9905
+    ConvNeXt-T                               RF       external  acc 0.8834  F1 0.8193  IoU 0.6939  AUC 0.9411
+    ConvNeXt-T                               XGBoost  primary   acc 0.9620  F1 0.9503  IoU 0.9052  AUC 0.9949
+    ConvNeXt-T                               XGBoost  external  acc 0.9018  F1 0.8478  IoU 0.7358  AUC 0.9624
+
+[extractor] Swin-T
+  features: raw 1440-D -> 128-D | extraction+training 11.4s
+    Swin-T                                   FCL      primary   acc 0.9740  F1 0.9664  IoU 0.9349  AUC 0.9965
+    Swin-T                                   FCL      external  acc 0.7575  F1 0.7195  IoU 0.5619  AUC 0.9405
+    Swin-T                                   SVM      primary   acc 0.9683  F1 0.9590  IoU 0.9212  AUC 0.9945
+    Swin-T                                   SVM      external  acc 0.6872  F1 0.6663  IoU 0.4995  AUC 0.8929
+    Swin-T                                   RF       primary   acc 0.9472  F1 0.9299  IoU 0.8689  AUC 0.9884
+    Swin-T                                   RF       external  acc 0.7831  F1 0.7140  IoU 0.5552  AUC 0.8858
+    Swin-T                                   XGBoost  primary   acc 0.9667  F1 0.9565  IoU 0.9167  AUC 0.9952
+    Swin-T                                   XGBoost  external  acc 0.7700  F1 0.7211  IoU 0.5639  AUC 0.9222
+
+[extractor] DINOv2 ViT-S/14
+  features: raw 1536-D -> 128-D | extraction+training 20.3s
+    DINOv2 ViT-S/14                          FCL      primary   acc 0.9646  F1 0.9536  IoU 0.9114  AUC 0.9953
+    DINOv2 ViT-S/14                          FCL      external  acc 0.9051  F1 0.8460  IoU 0.7331  AUC 0.9572
+    DINOv2 ViT-S/14                          SVM      primary   acc 0.9627  F1 0.9511  IoU 0.9067  AUC 0.9944
+    DINOv2 ViT-S/14                          SVM      external  acc 0.8647  F1 0.8032  IoU 0.6711  AUC 0.9417
+    DINOv2 ViT-S/14                          RF       primary   acc 0.9577  F1 0.9444  IoU 0.8946  AUC 0.9926
+    DINOv2 ViT-S/14                          RF       external  acc 0.8652  F1 0.7937  IoU 0.6580  AUC 0.9314
+    DINOv2 ViT-S/14                          XGBoost  primary   acc 0.9640  F1 0.9528  IoU 0.9099  AUC 0.9952
+    DINOv2 ViT-S/14                          XGBoost  external  acc 0.9076  F1 0.8526  IoU 0.7431  AUC 0.9631
+
+[extractor] Hybrid ConvNeXt+DINOv2+CBAM (ours)
+    epoch 1/30  loss 1.2098
+    epoch 5/30  loss 0.2475
+    epoch 10/30  loss 0.0977
+    epoch 15/30  loss 0.0705
+    epoch 20/30  loss 0.0621
+    epoch 25/30  loss 0.0590
+    epoch 30/30  loss 0.0597
+  features: raw 128-D -> 128-D | extraction+training 200.9s
+    Hybrid ConvNeXt+DINOv2+CBAM (ours)       FCL      primary   acc 0.9801  F1 0.9741  IoU 0.9495  AUC 0.9986
+    Hybrid ConvNeXt+DINOv2+CBAM (ours)       FCL      external  acc 0.9298  F1 0.8956  IoU 0.8110  AUC 0.9806
+    Hybrid ConvNeXt+DINOv2+CBAM (ours)       SVM      primary   acc 0.9805  F1 0.9747  IoU 0.9507  AUC 0.9979
+    Hybrid ConvNeXt+DINOv2+CBAM (ours)       SVM      external  acc 0.9259  F1 0.8908  IoU 0.8030  AUC 0.9735
+    Hybrid ConvNeXt+DINOv2+CBAM (ours)       RF       primary   acc 0.9803  F1 0.9744  IoU 0.9500  AUC 0.9978
+    Hybrid ConvNeXt+DINOv2+CBAM (ours)       RF       external  acc 0.9236  F1 0.8877  IoU 0.7981  AUC 0.9782
+    Hybrid ConvNeXt+DINOv2+CBAM (ours)       XGBoost  primary   acc 0.9802  F1 0.9743  IoU 0.9499  AUC 0.9985
+    Hybrid ConvNeXt+DINOv2+CBAM (ours)       XGBoost  external  acc 0.9204  F1 0.8837  IoU 0.7916  AUC 0.9780
+
+[end-to-end] U-Net (e2e)
+    epoch 1/30  loss 1.0259
+    epoch 5/30  loss 0.5156
+    epoch 10/30  loss 0.2926
+    epoch 15/30  loss 0.2328
+    epoch 20/30  loss 0.1743
+    epoch 25/30  loss 0.1441
+    epoch 30/30  loss 0.1337
+    U-Net (e2e)                              -        primary   acc 0.9728  F1 0.9651  IoU 0.9326  AUC 0.9955
+    U-Net (e2e)                              -        external  acc 0.4085  F1 0.5230  IoU 0.3541  AUC 0.5376
+
+[end-to-end] SegFormer-B0 (e2e)
+    epoch 1/30  loss 1.1371
+    epoch 5/30  loss 0.3397
+    epoch 10/30  loss 0.1325
+    epoch 15/30  loss 0.0964
+    epoch 20/30  loss 0.0863
+    epoch 25/30  loss 0.0803
+    epoch 30/30  loss 0.0748
+    SegFormer-B0 (e2e)                       -        primary   acc 0.9783  F1 0.9721  IoU 0.9456  AUC 0.9981
+    SegFormer-B0 (e2e)                       -        external  acc 0.8808  F1 0.7950  IoU 0.6597  AUC 0.9516
+
+[end-to-end] SAM ViT-B zero-shot (e2e)
+    SAM ViT-B zero-shot (e2e)                -        primary   acc 0.7270  F1 0.6553  IoU 0.4873  AUC 0.7170
+    SAM ViT-B zero-shot (e2e)                -        external  acc 0.6552  F1 0.5274  IoU 0.3581  AUC 0.6390
+
+[end-to-end] Hybrid head (e2e, ours)
+    Hybrid head (e2e, ours)                  -        primary   acc 0.9799  F1 0.9740  IoU 0.9493  AUC 0.9986
+    Hybrid head (e2e, ours)                  -        external  acc 0.9280  F1 0.8937  IoU 0.8078  AUC 0.9807
+
+Primary-set overall accuracy:
+classifier                               -     FCL      RF     SVM  XGBoost
+display                                                                    
+ConvNeXt-T                             NaN  0.9654  0.9487  0.9630   0.9620
+DINOv2 ViT-S/14                        NaN  0.9646  0.9577  0.9627   0.9640
+Hybrid ConvNeXt+DINOv2+CBAM (ours)     NaN  0.9801  0.9803  0.9805   0.9802
+Hybrid head (e2e, ours)             0.9799     NaN     NaN     NaN      NaN
+M1 Gabor                               NaN  0.9400  0.9405  0.9312   0.9424
+M2 +LBP                                NaN  0.9392  0.9410  0.9303   0.9434
+M3 +Edges                              NaN  0.9341  0.9409  0.9305   0.9439
+M4 +K-means                            NaN  0.9437  0.9433  0.9371   0.9470
+M5 +Gaussian                           NaN  0.9481  0.9467  0.9391   0.9526
+Paper CNN fusion (2022)                NaN  0.9385  0.9363  0.9391   0.9378
+ResNet-50                              NaN  0.9750  0.9686  0.9710   0.9749
+SAM ViT-B zero-shot (e2e)           0.7270     NaN     NaN     NaN      NaN
+SegFormer-B0 (e2e)                  0.9783     NaN     NaN     NaN      NaN
+Swin-T                                 NaN  0.9740  0.9472  0.9683   0.9667
+U-Net (e2e)                         0.9728     NaN     NaN     NaN      NaN
+
+saved to results/zheng

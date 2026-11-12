@@ -1,0 +1,61 @@
+
+==== run 2026-11-12 22:33:29 ====
+{
+ "images": "data/zheng_wbc/Dataset 1",
+ "masks": "data/zheng_wbc/Dataset 1",
+ "ext_images": null,
+ "ext_masks": null,
+ "image_ext": ".bmp",
+ "ext_image_ext": null,
+ "synthetic": 0,
+ "pseudo_gt": false,
+ "limit": null,
+ "per_class": null,
+ "max_side": 400,
+ "roi_size": 128,
+ "localizer": "otsu",
+ "sam_model": "facebook/sam-vit-base",
+ "stain": "reinhard",
+ "no_clahe": false,
+ "extractors": "paper,hybrid",
+ "classifiers": "svm,xgb",
+ "e2e": "",
+ "pca": 128,
+ "train_px": 512,
+ "test_px": 2048,
+ "epochs": 30,
+ "n_vis": 8,
+ "seed": 0,
+ "out": "results/ablation\\otsu_reinhard_clahe"
+}
+data: train 240  test 60  external 0
+preprocessing: reinhard+clahe
+phase I localiser: otsu
+  [train] 240 ROIs | WBC coverage 0.4670 | centroid-in-WBC 0.988 | 0.8 ms/img
+  [test] 60 ROIs | WBC coverage 0.4685 | centroid-in-WBC 0.967 | 0.8 ms/img
+train pixels 122880 (WBC 80.0%) | eval pixels primary 122880
+
+[extractor] Paper CNN fusion (2022)
+  features: raw 128-D -> 128-D | extraction+training 0.5s
+    Paper CNN fusion (2022)                  SVM      primary   acc 0.9537  F1 0.9713  IoU 0.9443  AUC 0.9723
+    Paper CNN fusion (2022)                  XGBoost  primary   acc 0.9551  F1 0.9721  IoU 0.9457  AUC 0.9752
+
+[extractor] Hybrid ConvNeXt+DINOv2+CBAM (ours)
+    epoch 1/30  loss 1.1141
+    epoch 5/30  loss 0.3493
+    epoch 10/30  loss 0.1614
+    epoch 15/30  loss 0.1082
+    epoch 20/30  loss 0.0942
+    epoch 25/30  loss 0.0807
+    epoch 30/30  loss 0.0803
+  features: raw 128-D -> 128-D | extraction+training 196.0s
+    Hybrid ConvNeXt+DINOv2+CBAM (ours)       SVM      primary   acc 0.9688  F1 0.9806  IoU 0.9619  AUC 0.9939
+    Hybrid ConvNeXt+DINOv2+CBAM (ours)       XGBoost  primary   acc 0.9688  F1 0.9806  IoU 0.9618  AUC 0.9945
+
+Primary-set overall accuracy:
+classifier                             SVM  XGBoost
+display                                            
+Hybrid ConvNeXt+DINOv2+CBAM (ours)  0.9688   0.9688
+Paper CNN fusion (2022)             0.9537   0.9551
+
+saved to results/ablation\otsu_reinhard_clahe

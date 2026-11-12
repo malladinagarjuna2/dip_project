@@ -1,0 +1,89 @@
+
+==== run 2026-11-11 22:22:45 ====
+{
+ "images": "data/aml/images",
+ "masks": "data/aml/masks",
+ "ext_images": null,
+ "ext_masks": null,
+ "synthetic": 0,
+ "pseudo_gt": false,
+ "limit": null,
+ "per_class": null,
+ "max_side": 400,
+ "roi_size": 128,
+ "localizer": "otsu",
+ "sam_model": "facebook/sam-vit-base",
+ "stain": "none",
+ "no_clahe": true,
+ "extractors": "paper,hybrid",
+ "classifiers": "svm,xgb",
+ "e2e": "",
+ "pca": 128,
+ "train_px": 512,
+ "test_px": 2048,
+ "epochs": 30,
+ "n_vis": 8,
+ "seed": 0,
+ "out": "results/ablation\\otsu_none"
+}
+
+==== run 2026-11-12 22:29:44 ====
+{
+ "images": "data/zheng_wbc/Dataset 1",
+ "masks": "data/zheng_wbc/Dataset 1",
+ "ext_images": null,
+ "ext_masks": null,
+ "image_ext": ".bmp",
+ "ext_image_ext": null,
+ "synthetic": 0,
+ "pseudo_gt": false,
+ "limit": null,
+ "per_class": null,
+ "max_side": 400,
+ "roi_size": 128,
+ "localizer": "otsu",
+ "sam_model": "facebook/sam-vit-base",
+ "stain": "none",
+ "no_clahe": true,
+ "extractors": "paper,hybrid",
+ "classifiers": "svm,xgb",
+ "e2e": "",
+ "pca": 128,
+ "train_px": 512,
+ "test_px": 2048,
+ "epochs": 30,
+ "n_vis": 8,
+ "seed": 0,
+ "out": "results/ablation\\otsu_none"
+}
+data: train 240  test 60  external 0
+preprocessing: none
+phase I localiser: otsu
+  [train] 240 ROIs | WBC coverage 0.6491 | centroid-in-WBC 0.983 | 0.7 ms/img
+  [test] 60 ROIs | WBC coverage 0.6551 | centroid-in-WBC 0.983 | 0.7 ms/img
+train pixels 122880 (WBC 72.9%) | eval pixels primary 122880
+
+[extractor] Paper CNN fusion (2022)
+  features: raw 128-D -> 128-D | extraction+training 0.6s
+    Paper CNN fusion (2022)                  SVM      primary   acc 0.9556  F1 0.9696  IoU 0.9411  AUC 0.9881
+    Paper CNN fusion (2022)                  XGBoost  primary   acc 0.9555  F1 0.9696  IoU 0.9410  AUC 0.9897
+
+[extractor] Hybrid ConvNeXt+DINOv2+CBAM (ours)
+    epoch 1/30  loss 1.1298
+    epoch 5/30  loss 0.3050
+    epoch 10/30  loss 0.1288
+    epoch 15/30  loss 0.1266
+    epoch 20/30  loss 0.0885
+    epoch 25/30  loss 0.0855
+    epoch 30/30  loss 0.0794
+  features: raw 128-D -> 128-D | extraction+training 193.2s
+    Hybrid ConvNeXt+DINOv2+CBAM (ours)       SVM      primary   acc 0.9779  F1 0.9849  IoU 0.9702  AUC 0.9969
+    Hybrid ConvNeXt+DINOv2+CBAM (ours)       XGBoost  primary   acc 0.9782  F1 0.9850  IoU 0.9705  AUC 0.9976
+
+Primary-set overall accuracy:
+classifier                             SVM  XGBoost
+display                                            
+Hybrid ConvNeXt+DINOv2+CBAM (ours)  0.9779   0.9782
+Paper CNN fusion (2022)             0.9556   0.9555
+
+saved to results/ablation\otsu_none
